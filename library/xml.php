@@ -1,0 +1,52 @@
+<?PHP
+
+//=====================================================
+class Xml {
+	private $xml;
+	
+//=====================================================
+// create ouput xml
+	function __construct() {
+	// initialice output xml
+
+		$this->xml = new SimpleXmlElement("
+			<api>
+				<data/>
+				<diagnostic>
+					<hits>0</hits>
+				</diagnostic>
+			</api>
+		");
+	}
+
+
+//=====================================================
+// insert error message
+	function error($error) {
+		$this->xml->diagnostic->error = $error;
+	}
+	
+	
+//=====================================================
+// insert hits count
+	function hits($hits) {
+		$this->xml->diagnostic->hits = int($hits);
+	}
+	
+	
+//=====================================================
+// insert data
+	function data($data) {
+		$this->xml->diagnostic->data = $data;
+	}
+
+
+//=====================================================
+// output xml
+	function render() {
+		echo "<pre>";
+		print_r($this->xml);
+		echo "</pre>";
+	}
+}
+?>

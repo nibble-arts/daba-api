@@ -1,0 +1,9 @@
+[daba]
+plugin=mysql
+database=iggmp
+user=iggmp
+password=Eisenbahn
+
+[plugin]
+plugin_path=plugin
+
