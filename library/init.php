@@ -23,7 +23,7 @@ class System {
 //=====================================================
 // return parameter
 	function get($param) {
-		if (key_exists($this->param,$param))
+		if (key_exists($param,$this->param))
 			return ($this->param[$param]);
 		else
 			return false;
