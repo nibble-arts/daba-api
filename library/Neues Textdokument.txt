@@ -2,22 +2,23 @@
 
 
 //=====================================================
-class System {
-	private $param;
+class Database {
+	private $database;
 
 
 //=====================================================
-// load system configuration
-	function __construct($output) {
-// load system configuration
-		if (file_exists("config.ini")) {
-			$this->param = parse_ini_file("config.ini");
+// load database configuration
+	function __construct() {
+		if (file_exists("daba.xml")) {
+			$this->database = simplexml_load_file("daba.xml");
 		}
 		else {
-			$output->error("fatal error: system configuration not found [init.php:__construct]");
+			$output->error("fatal error: database configuration not found [init.php:__construct]");
+			$output->render();
+			die();
 		}
 	}
-
+	
 
 //=====================================================
 // return parameter

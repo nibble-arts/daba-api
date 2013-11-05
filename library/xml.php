@@ -23,7 +23,14 @@ class Xml {
 //=====================================================
 // insert error message
 	function error($error) {
-		$this->xml->diagnostic->error = $error;
+		$this->xml->diagnostic->addChild("error",$error);
+	}
+	
+	
+//=====================================================
+// insert search string
+	function search($search) {
+		$this->xml->diagnostic->addChild("search",$search);
 	}
 	
 	

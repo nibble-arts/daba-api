@@ -5,21 +5,21 @@ class plugin_mysql {
 	var $dbResource;
 
 // create mysql opject
-	function __construct($param) {
+	function __construct($xml,$param) {
 		$this->db = $param;
-		$this->connect($this->db);
+		$this->connect($xml,$this->db);
 	}
 	
 
 // connect to database
-	function connect($db) {
+	function connect($xml,$db) {
 // establish connection to db server
 
     $this->dbResource = @MYSQL_CONNECT($db["server"],$db["user"],$db["password"]);
 
     if (!$this->dbResource)
     {
-    	echo('**error no database connection');
+    	$xml->error("can't establish database connection [plugin_mysql:connect]");
 			return FALSE;
 		}
 		else
@@ -35,23 +35,25 @@ class plugin_mysql {
 
 // get data from database
 	function getData($options) {
-		$queryString = "";
-		$xml = new simpleXmlElement("<entry/>");
+		if ($this->dbResource) {
+			$queryString = "";
+			$xml = new simpleXmlElement("<entry/>");
 		
-		$table = $options["table"];
-		$where = $options["search"];
+			$table = $options["table"];
+			$where = $options["search"];
 
-		$queryString = "SELECT * FROM $table WHERE $where";
+			$queryString = "SELECT * FROM $table WHERE $where";
 
-		if ($res = mysql_query($queryString,$this->dbResource)) {
-			$mysqlArray = mysql_fetch_array($res,MYSQL_ASSOC);
+			if ($res = mysql_query($queryString,$this->dbResource)) {
+				$mysqlArray = mysql_fetch_array($res,MYSQL_ASSOC);
 			
-//TODO convert to xml data
-			foreach($mysqlArray as $key => $entry) {
-				$xml->addChild($key,$entry);
+	//TODO convert to xml data
+				foreach($mysqlArray as $key => $entry) {
+					$xml->addChild($key,$entry);
+				}
+			
+				return $xml;
 			}
-			
-			return $xml;
 		}
 	}
 

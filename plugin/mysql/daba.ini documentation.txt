@@ -1,0 +1,32 @@
+#database name
+[iggmp]
+
+#table
+	[railway]
+
+#field
+# type: text ... text with 'length' (length=0) -> autolength
+#				number ... int or float value
+#				enumerate ... enumerated field
+#											the content comes out of a linked field
+#				linked ... linked field to 'linkfield'
+# repeat: field can be repeated
+# multiling: field is multilingual
+#						 has automatic linked field for multiple languages
+
+		[title]
+			type=text
+			length=250
+			repeat=false
+			multilang=true
+		[land]
+			type=linked
+			multilang=true
+			linked=true
+			linkedfield=land
+	[land]
+		[name]
+			type=text
+			length=50
+			repeat=false
+			multilang=true

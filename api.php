@@ -1,7 +1,10 @@
 <?PHP
 
 include ("library/xml.php");
+include ("library/input.php");
 include ("library/init.php");
+include ("library/daba.php");
+
 include ("library/plugin.php");
 
 // create output xml
@@ -9,9 +12,15 @@ $output = new Xml();
 
 // load system parameters
 $system = new System($output);
+$database = new Database($output);
 
 // load plugins
-$plugin = new Plugin($system->get("plugin_path"));
+$plugin = new Plugin($output,$system->get("plugin_path"));
+
+
+//===========================================================
+// parse input param string
+$input = new Input($output,$_GET);
 
 
 //===========================================================
@@ -22,7 +31,7 @@ $options = array(
 	"search" => "title LIKE '%graz%'"
 );
 
-$output->data($plugin->call("database",$options));
+$output->data($plugin->call($output,"database",$options));
 
 
 

@@ -8,12 +8,12 @@ class Plugin {
 //=====================================================
 // create plugin object
 // if path is given, scan dir
-	function __construct($path = "") {
+	function __construct($xml,$path = "") {
 		if ($path) {
 			if (file_exists($path)) {
 				$this->path = $path;
 
-				$this->load($this->path);
+				$this->load($xml,$this->path);
 			}
 		}
 	}
@@ -21,7 +21,7 @@ class Plugin {
 
 //=====================================================
 // scan plugin directory at path for plugins
-	function load($path) {
+	function load($xml,$path) {
 
 	// plugin path exists
 		$pluginDir = opendir($path);
@@ -32,7 +32,7 @@ class Plugin {
 			if (is_dir($path."/".$entry)) {
 				if ($entry != "." and $entry != "..") {
 					$pluginFile = $entry.".php";
-					
+
 	// include file
 					if (file_exists($path."/".$entry."/".$pluginFile) and file_exists($path."/".$entry."/define.ini")) {
 						include_once($path."/".$entry."/".$pluginFile);
@@ -44,13 +44,13 @@ class Plugin {
 							$plugin_param = parse_ini_file($path."/".$entry."/define.ini");
 
 			//TODO check for type parameter
-							$this->plugins[$plugin_param["type"]] = new $className($plugin_param);
+							$this->plugins[$plugin_param["type"]] = new $className($xml,$plugin_param);
 						}
 						else
-							echo "*** plugin class not found: $className<br>";
+							$xml->error("class '$className' not found in plugin '$entry' [plugin.php:load]");
 					}
 					else
-						echo "*** plugin or definition file not found: $pluginFile<br>";
+						$xml->error("plugin script '$pluginFile' or define.ini not found [plugin.php:load]");
 				}
 			}
 		}
@@ -58,11 +58,15 @@ class Plugin {
 
 
 //=====================================================
-	function call($name,$options) {
-		$plugin = $this->plugins[$name];
-		$scriptName = $options["command"];
+	function call($xml,$name,$options) {
+		if (key_exists($name,$this->plugins)) {
+			$plugin = $this->plugins[$name];
+			$scriptName = $options["command"];
 		
-		return($plugin->$scriptName($options));
+			return($plugin->$scriptName($options));
+		}
+		else
+			$xml->error("plugin '$name' not registered [plugin.php:call]");
 	}
 
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encode="utf-8"?>
+
+<search>
+	<railway>
+		<table>railway</table>
+		<fields>
+			<field name="title">name</field>
+		</fields>
+	</railway>
+</search>

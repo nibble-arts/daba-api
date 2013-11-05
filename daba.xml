@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<daba>
+	<railway type="table">
+		<title type="field">
+			<type>text</type>
+			<length>250</length>
+			<multilang/>
+		</title>
+		<land type="field">
+			<type>linked
+				<table>land</table>
+				<default>name</default>
+			</type>
+			<multilang/>
+		</land>
+	</railway>
+
+	<land type="table">
+		<code type="field">
+			<type>text</type>
+			<length>50</length>
+			<multilang/>
+		</code>
+		<name type="field">
+			<type>text</type>
+			<length>10</length>
+		</name>
+	</land>
+</daba>
+
