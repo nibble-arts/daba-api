@@ -32,7 +32,8 @@ $options = array(
 );
 
 
-$plugin->call($output,"database",$options);
+$plugin->call($output,"database",$options)
+;
 
 
 

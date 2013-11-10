@@ -63,7 +63,7 @@ class Plugin {
 			$plugin = $this->plugins[$name];
 			$scriptName = $options["command"];
 		
-			$xml->data($plugin->$scriptName($xml,$options));
+			return($plugin->$scriptName($xml,$options));
 		}
 		else
 			$xml->error("plugin '$name' not registered [plugin.php:call]");

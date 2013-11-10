@@ -17,7 +17,7 @@ class Input {
 		if ($this->search) {
 			$searchArray = explode("=",$this->search);
 			
-			$this->search = $searchArray[0]." LIKE '%".$searchArray[1]."%'";
+			$this->search = $searchArray[0]."='".$searchArray[1]."'";
 			$xml->search($this->search);
 		}
 		

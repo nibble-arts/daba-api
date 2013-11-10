@@ -60,11 +60,11 @@ class Xml {
 //=====================================================
 // output xml
 	function render() {
-		echo "<pre>";
+/*		echo "<pre>";
 		print_r($this->xml);
-		echo "</pre>";
+		echo "</pre>";*/
 
-//		echo $this->xml->asXML();
+		echo $this->xml->asXML();
 	}
 }
 
